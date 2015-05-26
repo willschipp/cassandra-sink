@@ -33,8 +33,8 @@ public class CassandraConfiguration {
 	@Autowired
 	private Environment environment;
 	
-	@Value("${contactPoint}")
-	private String contactPoint;
+	@Value("${contactPoints}")
+	private String contactPoints;
 	
 	@Value("${port}")
 	private int port;
@@ -48,7 +48,8 @@ public class CassandraConfiguration {
 	}
 
 	/**
-	 * simple transformation flow
+	 * simple transformation flow which goes
+	 * input -> transformer (json to map) -> service activator
 	 * @return
 	 */
 	@Bean
@@ -72,7 +73,7 @@ public class CassandraConfiguration {
 	public CassandraClusterFactoryBean cluster() {
 
 		CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
-		cluster.setContactPoints(contactPoint);
+		cluster.setContactPoints(contactPoints);
 		cluster.setPort(port);
 
 		return cluster;

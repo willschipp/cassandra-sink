@@ -5,7 +5,7 @@ import org.springframework.xd.module.options.spi.ModuleOption;
 
 public class CassandraMetaData {
 
-	private String contactPoint;
+	private String contactPoints;
 	
 	private int port;
 	
@@ -13,13 +13,13 @@ public class CassandraMetaData {
 	
 	private String table;
 
-	public String getContactPoint() {
-		return contactPoint;
+	public String getContactPoints() {
+		return contactPoints;
 	}
 
 	@ModuleOption("Cassandra ContactPoint")
-	public void setContactPoint(String contactPoint) {
-		this.contactPoint = contactPoint;
+	public void setContactPoints(String contactPoints) {
+		this.contactPoints = contactPoints;
 	}
 
 	public int getPort() {
