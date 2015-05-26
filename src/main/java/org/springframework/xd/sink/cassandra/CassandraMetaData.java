@@ -2,12 +2,18 @@ package org.springframework.xd.sink.cassandra;
 
 import org.springframework.xd.module.options.spi.ModuleOption;
 
-
+/**
+ * metadata configuraiton for spring-xd
+ * 
+ * 
+ * @author willschipp
+ *
+ */
 public class CassandraMetaData {
 
 	private String contactPoints;
 	
-	private int port;
+	private String port;
 	
 	private String keySpace;
 	
@@ -22,12 +28,12 @@ public class CassandraMetaData {
 		this.contactPoints = contactPoints;
 	}
 
-	public int getPort() {
+	public String getPort() {
 		return port;
 	}
 
 	@ModuleOption("Cassandra Port")
-	public void setPort(int port) {
+	public void setPort(String port) {
 		this.port = port;
 	}
 
@@ -49,7 +55,5 @@ public class CassandraMetaData {
 		this.table = table;
 	}
 
-	
-	
 	
 }

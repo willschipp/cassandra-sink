@@ -5,4 +5,4 @@
 - copy java dsl support
 
 #### To Do
-- finish the options piece
+- build out a proper self-contained test suite

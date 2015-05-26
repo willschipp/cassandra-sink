@@ -35,7 +35,7 @@ public class CassandraMapSink {
 	private String targetTable;
 	
 	/**
-	 * expectsthe payload to be a Map of String and Objects
+	 * expects the payload to be a Map of String and Objects
 	 * @param payload
 	 */
 	@ServiceActivator

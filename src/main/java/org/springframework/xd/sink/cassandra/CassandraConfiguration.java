@@ -26,6 +26,13 @@ import org.springframework.messaging.MessageChannel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+ * core configuration class responsible for setting up the 
+ * cassandra parts
+ * 
+ * @author willschipp
+ *
+ */
 @Configuration
 @EnableIntegration
 public class CassandraConfiguration {
@@ -37,7 +44,7 @@ public class CassandraConfiguration {
 	private String contactPoints;
 	
 	@Value("${port}")
-	private int port;
+	private String port;
 	
 	@Value("${keySpace}")
 	private String keySpace;
@@ -74,7 +81,7 @@ public class CassandraConfiguration {
 
 		CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
 		cluster.setContactPoints(contactPoints);
-		cluster.setPort(port);
+		cluster.setPort(Integer.parseInt(port));
 
 		return cluster;
 	}
