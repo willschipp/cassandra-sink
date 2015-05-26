@@ -3,9 +3,9 @@ package org.springframework.xd.sink.cassandra;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
@@ -27,19 +27,30 @@ import org.springframework.messaging.MessageChannel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
-@PropertySource("classpath:cassandra.properties")
 @EnableIntegration
 public class CassandraConfiguration {
-
 	
 	@Autowired
 	private Environment environment;
+	
+	@Value("${contactPoint}")
+	private String contactPoint;
+	
+	@Value("${port}")
+	private int port;
+	
+	@Value("${keySpace}")
+	private String keySpace;
 	
 	@Bean
 	public MessageChannel input() {
 		return new DirectChannel();
 	}
 
+	/**
+	 * simple transformation flow
+	 * @return
+	 */
 	@Bean
 	public IntegrationFlow sinkFlow() {
 		return IntegrationFlows.from(input())
@@ -53,22 +64,16 @@ public class CassandraConfiguration {
 	}
 	
 	@Bean
-	public String targetTable() {
-		return "test";
-	}
-
-	@Bean
 	public CassandraMapSink sink() {
 		return new CassandraMapSink();
 	}
-
 
 	@Bean
 	public CassandraClusterFactoryBean cluster() {
 
 		CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
-		cluster.setContactPoints(environment.getProperty("cassandra.contactpoints"));
-		cluster.setPort(Integer.parseInt(environment.getProperty("cassandra.port")));
+		cluster.setContactPoints(contactPoint);
+		cluster.setPort(port);
 
 		return cluster;
 	}
@@ -88,7 +93,7 @@ public class CassandraConfiguration {
 
 		CassandraSessionFactoryBean session = new CassandraSessionFactoryBean();
 		session.setCluster(cluster().getObject());
-		session.setKeyspaceName(environment.getProperty("cassandra.keyspace"));
+		session.setKeyspaceName(keySpace);
 		session.setConverter(converter());
 		session.setSchemaAction(SchemaAction.NONE);
 
